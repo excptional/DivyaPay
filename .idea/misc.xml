@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/drawable/payment_background.xml" value="0.2225" />
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/drawable/splash_scrren.xml" value="0.2225" />
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/layout/activity_dashboard.xml" value="0.35208333333333336" />
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/layout/activity_main.xml" value="0.35208333333333336" />
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/layout/activity_splash_screen.xml" value="0.36" />
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/layout/fragment_account.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/layout/fragment_payment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/BIKASH/DivyaPay/app/src/main/res/layout/fragment_payment_form.xml" value="0.35208333333333336" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
