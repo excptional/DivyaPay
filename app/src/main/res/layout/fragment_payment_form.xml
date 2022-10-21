@@ -89,12 +89,12 @@
                 android:layout_marginTop="@dimen/_5sdp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/transactionIDEditText"
+                    android:id="@+id/phoneEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:hint="Transaction UPI ID"
+                    android:hint="Phone number"
                     android:textColor="#404040"
                     android:textSize="@dimen/_11sdp" />
 

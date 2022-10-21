@@ -3,52 +3,57 @@ package com.example.divyapay
 import android.content.Context
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import java.util.*
 
 
 class PaymentForm : Fragment() {
 
-//    private lateinit var binding: FragmentPaymentFormBinding
-
     private lateinit var tts: TextToSpeech
     private lateinit var name: String
     private lateinit var amount: String
-    private lateinit var transactionID: String
+    private lateinit var phoneNumber: String
     private lateinit var description: String
-    private val validUpiIDPattern = "^[\\w.-]+@[\\w.-]+\$"
-    private val validNumericPattern = "^(0|[1-9][0-9]*)\$"
+    private val validNumericPattern by lazy { "^(0|[1-9][0-9]*)\$" }
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-//        binding = FragmentPaymentFormBinding.inflate(layoutInflater)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, Payment()).commit()
+                }
+            })
 
         val view: View = inflater.inflate(R.layout.fragment_payment_form, container, false)
         val payBtn: LinearLayout = view.findViewById(R.id.payBtn)
         val nameEditText: EditText = view.findViewById(R.id.nameEditText)
         val amountEditText: EditText = view.findViewById(R.id.amountEditText)
-        val transactionIDEditText: EditText = view.findViewById(R.id.transactionIDEditText)
+        val phoneEditText: EditText = view.findViewById(R.id.phoneEditText)
         val descriptionEditText: EditText = view.findViewById(R.id.descriptionEditText)
 
         payBtn.setOnClickListener {
             name = nameEditText.text.toString()
             amount = amountEditText.text.toString()
-            transactionID = transactionIDEditText.text.toString()
+            phoneNumber = phoneEditText.text.toString()
             description = descriptionEditText.text.toString()
 
-            if (name.isNotEmpty() && amount.isNotEmpty() && amount.matches(validNumericPattern.toRegex()) && transactionID.isNotEmpty() && transactionID.matches(
-                    validUpiIDPattern.toRegex()
-                )
+            if (name.isNotEmpty() && amount.isNotEmpty() && amount.matches(validNumericPattern.toRegex()) && phoneNumber.isNotEmpty() && phoneNumber.matches(
+                    validNumericPattern.toRegex()
+                ) && (phoneNumber.length == 10)
             ) {
                 Toast.makeText(
                     requireActivity().applicationContext,
@@ -62,10 +67,10 @@ class PaymentForm : Fragment() {
                     amountEditText.error = "Enter amount here"
                 if (!amount.matches(validNumericPattern.toRegex()))
                     amountEditText.error = "Enter valid amount"
-                if (transactionID.isEmpty())
-                    transactionIDEditText.error = "Enter transaction id here"
-                if (!transactionID.matches(validUpiIDPattern.toRegex()))
-                    transactionIDEditText.error = "Enter valid transaction id"
+                if (phoneNumber.isEmpty())
+                    phoneEditText.error = "Enter phone number here"
+                if (!phoneNumber.matches(validNumericPattern.toRegex()) || (phoneNumber.length == 10))
+                    phoneEditText.error = "Enter valid phone number"
                 Toast.makeText(
                     requireActivity().applicationContext,
                     "Fill details properly",
@@ -75,7 +80,7 @@ class PaymentForm : Fragment() {
         }
         textToSpeech(
             requireActivity().applicationContext,
-            "Here you have to fill name, amount, transaction i d and description          ."
+            "Here you have to fill name, amount, phone number and description          ."
                     + "fill all the details and click on the pay button for final payment       ."
                     + "swipe left to return back        ."
                     + "if you are want to fill this details using our voice assistance then swipe right        ."

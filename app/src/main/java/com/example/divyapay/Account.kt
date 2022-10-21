@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.example.divyapay.databinding.FragmentAccountBinding
 import java.util.*
 
@@ -21,6 +22,12 @@ class Account : Fragment() {
     ): View? {
 
         binding = FragmentAccountBinding.inflate(layoutInflater)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.frame_layout, Home()).commit()
+            }
+        })
 
         val name: String = binding.nameAccount.text.toString()
         val number: String = spaceGiving(binding.numberAccount.text.toString())

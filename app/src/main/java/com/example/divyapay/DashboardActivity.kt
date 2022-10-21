@@ -13,6 +13,7 @@ import android.speech.tts.TextToSpeech
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -31,13 +32,12 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private lateinit var gestureDetector: GestureDetector
     private lateinit var tts: TextToSpeech
-    private lateinit var name: String
-    private lateinit var amount: String
-    private lateinit var transactionID: String
-    private lateinit var description: String
+    private var name: String = ""
+    private var amount: String = ""
+    private var phoneNumber: String = ""
+    private var description: String = ""
     private var flag = false
     private var count = 0
-    private val validUpiIDPattern by lazy { "^[\\w.-]+@[\\w.-]+\$" }
     private val validNumericPattern by lazy { "^(0|[1-9][0-9]*)\$" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +45,15 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        this.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if(!flag){
+                    binding.voiceInputLayout.visibility = View.GONE
+                    binding.frameLayout.visibility = View.VISIBLE
+                    flag = true
+                }
+            }
+        })
 
         checkDeviceHasBiometric()
         window.statusBarColor = Color.WHITE
@@ -88,12 +97,11 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    textToSpeech(this@DashboardActivity, "Log in failed.")
+                    textToSpeech(this@DashboardActivity, "Log in failed")
                     Toast.makeText(
                         applicationContext, "Authentication failed",
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                 }
             })
 
@@ -152,26 +160,14 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onGesture(gesture: GestureDetector.Gesture): Boolean {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
         when (gesture) {
             GestureDetector.Gesture.TAP ->
                 return true
             GestureDetector.Gesture.SWIPE_RIGHT -> {
-                if (flag) {
-                    when (currentFragment) {
-                        is Home -> replaceFragments(Payment())
-                        is Payment -> replaceFragments(PaymentForm())
-                        is Account -> replaceFragments(Account())
-                        is PaymentForm -> {
-                            flag = false
-                            supportFragmentManager.findFragmentById(R.id.frame_layout)?.onDestroy()
-                            binding.voiceInputLayout.visibility = View.VISIBLE
-                            binding.frameLayout.visibility = View.GONE
-                            voicePFBefore()
-                        }
-                    }
-                } else {
+                if (!flag) {
                     if(tts.isSpeaking){
                         tts.stop()
                         tts.shutdown()
@@ -186,7 +182,7 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                             "Say name first, double tap to try again",
                             Toast.LENGTH_LONG
                         ).show()
-                    } else if (count == 1 && (!amount.matches(validNumericPattern.toRegex()) || amount.isEmpty())) {
+                    } else if ((count == 1) && (!amount.matches(validNumericPattern.toRegex()) || amount.isEmpty())) {
                         textToSpeech(
                             this,
                             "Say valid amount in numbers only, double tap to try again "
@@ -196,7 +192,7 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                             "Say valid amount in numbers only, double tap to try again",
                             Toast.LENGTH_LONG
                         ).show()
-                    } else if (count == 2 && (!transactionID.matches(validUpiIDPattern.toRegex()) || transactionID.isEmpty())) {
+                    } else if ((count == 2) && (!phoneNumber.matches(validNumericPattern.toRegex()) || phoneNumber.isEmpty())) {
                         textToSpeech(
                             this,
                             "Say valid transaction i d, double tap to try again "
@@ -212,7 +208,7 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                             this,
                             "your name is $name, selected amount is $amount rupees, transaction i d is ${
                                 spaceGiving(
-                                    transactionID
+                                    phoneNumber
                                 )
                             } and note is $description, now swipe right to pay the money and swipe left to cancel the payment"
                         )
@@ -220,12 +216,29 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                         count++
                         voicePFBefore()
                     }
+
+                } else {
+                    when (currentFragment) {
+                        is Home -> replaceFragments(Payment())
+                        is Payment -> replaceFragments(PaymentForm())
+                        is Account -> replaceFragments(Account())
+                        is PaymentForm -> {
+                            flag = false
+                            supportFragmentManager.findFragmentById(R.id.frame_layout)?.onDestroy()
+                            binding.voiceInputLayout.visibility = View.VISIBLE
+                            binding.frameLayout.visibility = View.GONE
+                            voicePFBefore()
+                        }
+                    }
                 }
                 return true
             }
             GestureDetector.Gesture.SWIPE_LEFT -> {
                 if (!flag) {
-                    replaceFragments(PaymentForm())
+                    flag = true
+                    count = 0
+                    binding.voiceInputLayout.visibility = View.GONE
+                    binding.frameLayout.visibility = View.VISIBLE
                     return true
                 }
                 when (currentFragment) {
@@ -324,12 +337,10 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
         return temp
     }
 
-    private fun fixID(s: String) : String{
-        var str = s.lowercase()
+    private fun fixNumber(s: String) : String{
+        var str = s
         if(str.contains(" ")) str = str.replace( " ", "")
-        if(str.contains("attherate")) str = str.replace("attherate", "@")
-        if(str.contains("underscore")) str = str.replace("underscore", "_")
-        if(str.contains("dot")) str = str.replace("dot", ".")
+        if(str.contains(",")) str = str.replace(",", "")
         return str
     }
 
@@ -377,14 +388,14 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                     .show()
             }
             2 -> {
-                binding.transactionIDVoiceInput.text = transactionID
+                binding.transactionIDVoiceInput.text = phoneNumber
                 textToSpeech(
                     this,
-                    "Your given transaction i d is ${spaceGiving(transactionID)}, swipe right to confirm, double tap to say again  "
+                    "Your given transaction i d is ${spaceGiving(phoneNumber)}, swipe right to confirm, double tap to say again  "
                 )
                 Toast
                     .makeText(
-                        this@DashboardActivity, "Your given transaction i d is $transactionID",
+                        this@DashboardActivity, "Your given transaction i d is $phoneNumber",
                         Toast.LENGTH_SHORT
                     )
                     .show()
@@ -468,8 +479,8 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                         0 -> name = str
                         1 -> amount = str
                         2 -> {
-                            str = fixID(str)
-                            transactionID = str
+                            str = fixNumber(str)
+                            phoneNumber = str
                         }
                         3 -> description = str
                     }
