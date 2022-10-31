@@ -109,7 +109,7 @@
                 android:textSize="@dimen/_11sdp" />
 
             <TextView
-                android:id="@+id/transactionIDVoiceInput"
+                android:id="@+id/phoneNumberVoiceInput"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginStart="@dimen/_20sdp"
@@ -118,7 +118,7 @@
                 android:background="@drawable/outline"
                 android:gravity="center_vertical"
                 android:padding="@dimen/_10sdp"
-                android:hint="Transaction ID"
+                android:hint="Phone number"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="#404040"

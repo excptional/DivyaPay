@@ -352,7 +352,7 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
             )
             2 -> textToSpeech(
                 this,
-                "Double tap and say the transaction upi i d where you want to send the money"
+                "Double tap and say the phone number where you want to send the money"
             )
             3 -> textToSpeech(this, "Double tap and say the note you want to add ")
         }
@@ -388,14 +388,14 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                     .show()
             }
             2 -> {
-                binding.transactionIDVoiceInput.text = phoneNumber
+                binding.phoneNumberVoiceInput.text = phoneNumber
                 textToSpeech(
                     this,
-                    "Your given transaction i d is ${spaceGiving(phoneNumber)}, swipe right to confirm, double tap to say again  "
+                    "Your given phone number is ${spaceGiving(phoneNumber)}, swipe right to confirm, double tap to say again  "
                 )
                 Toast
                     .makeText(
-                        this@DashboardActivity, "Your given transaction i d is $phoneNumber",
+                        this@DashboardActivity, "Your given phone number is $phoneNumber",
                         Toast.LENGTH_SHORT
                     )
                     .show()
@@ -511,5 +511,11 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
             tts.shutdown()
         }
         super.onDestroy()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        finishAffinity()
+        finish()
     }
 }
