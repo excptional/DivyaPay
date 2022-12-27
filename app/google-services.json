@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "707019781885",
+    "project_id": "divyapay-12469",
+    "storage_bucket": "divyapay-12469.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707019781885:android:7126a716ecbeb22354b094",
+        "android_client_info": {
+          "package_name": "com.example.divyapay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707019781885-v02orn1d0l962gjvsn28rppp7funm9h2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG51wOYf09o1J0-RdGF8u9Brd4W8ON4hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "707019781885-v02orn1d0l962gjvsn28rppp7funm9h2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
