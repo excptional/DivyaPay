@@ -14,8 +14,8 @@ class AppViewModel(application: Application) :
         get() = appRepository.userData
     val response: LiveData<Response<String>>
         get() = appRepository.response
-    val languageData: LiveData<String?>
-        get() = appRepository.languageData
+    val paymentStatusData: LiveData<String>
+        get() = appRepository.paymentStatusData
     val accDetails: LiveData<ArrayList<String>>
         get() = appRepository.accDetails
     val transactionDetails: LiveData<ArrayList<DocumentSnapshot>>

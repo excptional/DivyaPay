@@ -48,24 +48,39 @@ class Payment : Fragment() {
             if (selectedLang != "English") {
                 prepareTranslateModel()
             }
-            textToSpeech(
-                requireContext(), "Welcome to payment page        ."
-            )
-            textToSpeech(
-                requireContext(),"Here you have to provide the name of the receiver , the amount you want to pay,          ."
-            )
-            textToSpeech(
-                requireContext(),  " that phone number where you want to send the money and a description( what is not compulsory)        ."
-            )
-            textToSpeech(
-                requireContext(),"To make payment swipe right       ."
-            )
-            textToSpeech(
-                requireContext(), "To use voice assistance double tap to the screen      ."
-            )
-            textToSpeech(
-                requireContext(), "To return at the home page  swipe left    ."
-            )
+
+            if (selectedLang == "English") {
+                textToSpeech(
+                    requireContext(), "Welcome to payment page        ."
+                            + "Here you have to provide the name of the receiver , the amount you want to pay,          ."
+                            + "that phone number where you want to send the money and a description( what is not compulsory)        ."
+                            + "To make payment swipe right              ."
+                            + "To use the voice assistance double tap to the screen             ."
+                            + "To return at the home page  swipe left           ."
+                )
+            } else {
+                textToSpeech(
+                    requireContext(), "Welcome to payment page        ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    "Here you have to provide the name of the receiver , have to provide the amount you want to pay,          ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    " have to provide that phone number where you want to send the money and a description which is not compulsory        ."
+                )
+                textToSpeech(
+                    requireContext(), "swipe right  To make payment       ."
+                )
+                textToSpeech(
+                    requireContext(), "To use voice assistance double tap to the screen      ."
+                )
+                textToSpeech(
+                    requireContext(), "To return at the home page  swipe left    ."
+                )
+            }
+
         }
 
 
@@ -80,7 +95,7 @@ class Payment : Fragment() {
                 if (it == TextToSpeech.SUCCESS) {
                     tts.language = Locale.ENGLISH
                     tts.setSpeechRate(0.6f)
-                    tts.speak(it.toString(), TextToSpeech.QUEUE_ADD, null)
+                    tts.speak(speech, TextToSpeech.QUEUE_ADD, null)
                 }
             }
         } else {

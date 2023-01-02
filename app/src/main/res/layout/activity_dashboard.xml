@@ -451,4 +451,22 @@
         android:visibility="gone"
         app:lottie_autoPlay="true"/>
 
+    <LinearLayout
+        android:id="@+id/paymentWhiteLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#79FFFFFF"
+        android:visibility="gone"
+        android:orientation="horizontal" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/paymentProgressbar"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_centerInParent="true"
+        app:lottie_rawRes="@raw/roundblueprogressbar"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
 </RelativeLayout>

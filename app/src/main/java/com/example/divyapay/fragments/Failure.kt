@@ -1,6 +1,8 @@
 package com.example.divyapay.fragments
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +17,10 @@ class Failure : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_failure, container, false)
-        
+
+            val mp = MediaPlayer.create(requireContext(), R.raw.failure)
+            mp.start()
+
         return view
     }
 

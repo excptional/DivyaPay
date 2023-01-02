@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">KIIT 2022 UIT BU</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="payment_instruction">Here you have to provide the receiver name, the amount you want to pay, that phone number where you want to send the money and a description(what is not compulsory).</string>
+    <string name="payment_instruction">Here you have to provide the receiver name, the amount you want to pay, that phone number where you want to send the money and a description (not compulsory).</string>
 </resources>

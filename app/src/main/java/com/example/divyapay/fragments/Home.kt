@@ -50,24 +50,35 @@ class Home : Fragment() {
             if (selectedLang != "English") {
                 prepareTranslateModel()
             }
-            textToSpeech(
-                requireContext(), "Welcome to home page             ."
-            )
-            textToSpeech(
-                requireContext(), "To get your account details Swipe up            ."
-            )
-            textToSpeech(
-                requireContext(), "To get your latest transaction details Swipe down           ."
-            )
-            textToSpeech(
-                requireContext(), "To make payment Swipe right          ."
-            )
-            textToSpeech(
-                requireContext(), "To use voice assistance  Double tap              ."
-            )
-            textToSpeech(
-                requireContext(), "To repeat this instructions swipe left"
-            )
+            if (selectedLang == "English") {
+                textToSpeech(
+                    requireContext(), "Welcome to home page             ."
+                            + "To get your account details Swipe up            ."
+                            + "To get your latest transaction details Swipe down           ."
+                            + "To make payment Swipe right          ."
+                            + "To use voice assistance  Double tap              ."
+                            + "To repeat this instructions swipe left"
+                )
+            }else {
+                textToSpeech(
+                    requireContext(), "Welcome to home page             ."
+                )
+                textToSpeech(
+                    requireContext(), "Swipe upward  To get your account details          ."
+                )
+                textToSpeech(
+                    requireContext(), "Swipe downward To get your latest transaction details             ."
+                )
+                textToSpeech(
+                    requireContext(), "Swipe right to make payment         ."
+                )
+                textToSpeech(
+                    requireContext(), "To use the voice assistance do Double tap              ."
+                )
+                textToSpeech(
+                    requireContext(), "swipe left  To repeat this instructions          ."
+                )
+            }
         }
 
         return inflater.inflate(R.layout.fragment_home, container, false)

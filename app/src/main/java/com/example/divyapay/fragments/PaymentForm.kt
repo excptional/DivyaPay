@@ -130,7 +130,7 @@ class PaymentForm : Fragment() {
                 if (it == TextToSpeech.SUCCESS) {
                     tts.language = Locale.ENGLISH
                     tts.setSpeechRate(0.6f)
-                    tts.speak(it.toString(), TextToSpeech.QUEUE_ADD, null)
+                    tts.speak(speech, TextToSpeech.QUEUE_ADD, null)
                 }
             }
         } else {

@@ -78,41 +78,64 @@ class Account : Fragment() {
                 progressbar.visibility = View.GONE
                 mainLayout.visibility = View.VISIBLE
             }
+
             if (selectedLang != "English") {
                 prepareTranslateModel()
             }
 
-            textToSpeech(
-                requireContext(), "Welcome to account page"
-            )
-            textToSpeech(
-                requireContext(), "Bank  name is         ${bankAccount.text}               ."
-            )
-            textToSpeech(
-                requireContext(),
-                "Holder name is           ${nameAccount.text}                                ."
-            )
-            textToSpeech(
-                requireContext(),
-                "Registered mobile number is          ${phoneAccount.text}                          ."
-            )
-            textToSpeech(
-                requireContext(),
-                "Account number is           ${accNoAccount.text}                 ."
-            )
-            textToSpeech(
-                requireContext(),
-                "Current account balance is       ${accBalanceAccount.text.toString().replace("INR", "")} rupees                        ."
-            )
-            textToSpeech(
-                requireContext(), "double tap to use voice assistance                           ."
-            )
-            textToSpeech(
-                requireContext(), "swipe left to return at the home page                        ."
-            )
-            textToSpeech(
-                requireContext(), "swipe right to repeat your account details                   ."
-            )
+            if (selectedLang == "English") {
+                textToSpeech(
+                    requireContext(), "Welcome to account page                 ."
+                            + "Bank  name is         ${bankAccount.text}               ."
+                            + "Holder name is           ${nameAccount.text}                                ."
+                            + "Registered mobile number is          ${spaceGiving(phoneAccount.text as String)}                          ."
+                            + "Account number is           ${spaceGiving(accNoAccount.text as String)}                  ."
+                            + "Current account balance is       ${
+                        accBalanceAccount.text.toString().replace("INR", "")
+                    }                                              ."
+                            + "double tap to use voice assistance                           ."
+                            + "swipe left to return at the home page                        ."
+                            + "swipe right to repeat your account details                   ."
+                )
+            } else {
+                textToSpeech(
+                    requireContext(), "Welcome to account page"
+                )
+                textToSpeech(
+                    requireContext(), "Bank  name is         ${bankAccount.text}               ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    "Holder name is           ${nameAccount.text}                                ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    "Registered mobile number is          ${spaceGiving(phoneAccount.text as String)}                          ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    "Account number is           ${spaceGiving(accNoAccount.text as String)}                  ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    "Current account balance is       ${
+                        accBalanceAccount.text.toString().replace("INR", "")
+                    }                        ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    "double tap to use voice assistance                           ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    "swipe left to return at the home page                        ."
+                )
+                textToSpeech(
+                    requireContext(),
+                    "swipe right to repeat your account details                   ."
+                )
+            }
+
         }
 
         return view

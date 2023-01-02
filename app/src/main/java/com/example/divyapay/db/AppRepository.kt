@@ -21,9 +21,9 @@ class AppRepository(private val application: Application) {
     private val responseLiveData = MutableLiveData<Response<String>>()
     val response: LiveData<Response<String>>
         get() = responseLiveData
-    private val language = MutableLiveData<String?>()
-    val languageData: LiveData<String?>
-        get() = language
+    private val paymentStatusLivedata = MutableLiveData<String>()
+    val paymentStatusData: LiveData<String>
+        get() = paymentStatusLivedata
     private val accDetailsLiveData = MutableLiveData<ArrayList<String>>()
     val accDetails: LiveData<ArrayList<String>>
         get() = accDetailsLiveData
@@ -106,26 +106,29 @@ class AppRepository(private val application: Application) {
     fun makePayment(amount: String, phone: String) {
         val amountInt = Integer.parseInt(amount)
         val doc = firebaseDB.collection("users").document(firebaseAuth.currentUser!!.uid)
-        doc.get().addOnSuccessListener {
-            val userBalance = Integer.parseInt(it.getString("acc balance")!!)
-            val newBalance = userBalance - amountInt
-            doc.update("acc balance", newBalance.toString())
-        }
+
         val doc2 = firebaseDB.collection("users")
         doc2.get().addOnSuccessListener {
             for (i in it) {
                 if (phone == i.getString("mobile number")) {
-                    val userBalance = Integer.parseInt(i.getString("acc balance")!!)
-                    val newBalance = userBalance + amountInt
+                    doc.get().addOnSuccessListener {
+                        val userBalance1 = Integer.parseInt(it.getString("acc balance")!!)
+                        val newBalance1 = userBalance1 - amountInt
+                        doc.update("acc balance", newBalance1.toString())
+                    }
+                    val userBalance2 = Integer.parseInt(i.getString("acc balance")!!)
+                    val newBalance2 = userBalance2 + amountInt
                     val doc3 = firebaseDB.collection("users").document(i.getString("uid")!!)
                     doc3.get().addOnSuccessListener {
-                        doc3.update("acc balance", newBalance.toString())
+                        doc3.update("acc balance", newBalance2.toString())
                         addTransaction(phone, amount)
-                        responseLiveData.postValue(Response.Success())
+                        paymentStatusLivedata.postValue("success")
                     }
                         .addOnFailureListener {
-                            responseLiveData.postValue(Response.Failure(getErrorMassage(it)))
+                            paymentStatusLivedata.postValue("failure")
                         }
+                } else {
+                    paymentStatusLivedata.postValue("failure")
                 }
             }
         }

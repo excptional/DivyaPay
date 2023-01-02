@@ -22,6 +22,8 @@ class AuthenticationActivity : AppCompatActivity() {
         if (supportFragmentManager.findFragmentById(R.id.authFrameLayout) == SignIn()) {
             finishAffinity()
             finish()
+        }else{
+            this.supportFragmentManager.beginTransaction().replace(R.id.authFrameLayout, SignIn()).commit()
         }
     }
 }

@@ -174,10 +174,10 @@ class Transaction : Fragment() {
     }
 
     override fun onDestroy() {
-        if (tts.isSpeaking) {
-            tts.stop()
-            tts.shutdown()
-        }
+//        if (tts.isSpeaking) {
+//            tts.stop()
+//            tts.shutdown()
+//        }
         super.onDestroy()
     }
 
