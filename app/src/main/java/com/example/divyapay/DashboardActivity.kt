@@ -379,7 +379,7 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                                 spaceGiving(
                                     phoneNumber
                                 )
-                            } and note is $description, now swipe right to pay the money and swipe left to cancel the payment"
+                            } and note is $description, now do swipe right to make payment and swipe left to cancel the payment"
                         )
                         count++
                     } else if (count == 4) {
@@ -415,6 +415,7 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
             }
             GestureDetector.Gesture.SWIPE_LEFT -> {
                 if (!flag) {
+                    textToSpeech(this, "Payment cancel")
                     flag = true
                     count = 0
                     binding.voiceInputLayout.visibility = View.GONE
@@ -423,6 +424,7 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
                     binding.amountVoiceInput.text = ""
                     binding.phoneNumberVoiceInput.text = ""
                     binding.descriptionVoiceInput.text = ""
+                    dialogLayout.visibility = View.GONE
                     return true
                 }
                 when (currentFragment) {
@@ -545,7 +547,7 @@ class DashboardActivity : AppCompatActivity(), GestureDetector.OnGestureListener
         if (str.contains("rupees")) str = str.replace("rupees", "")
         if (str.contains("rupee")) str = str.replace("rupee", "")
         if (str.contains("rupay")) str = str.replace("rupay", "")
-        if (str.contains("rupyae")) str = str.replace("rupyae", "")
+        if (str.contains("rupaye")) str = str.replace("rupaye", "")
         if (str.contains("rupya")) str = str.replace("rupya", "")
         if (str.contains("taka")) str = str.replace("taka", "")
         if (str.contains("₹")) str = str.replace("₹", "")

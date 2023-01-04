@@ -75,6 +75,7 @@ class Transaction : Fragment() {
                 if(selectedLang != "English") {
                     prepareTranslateModel()
                 }
+                textToSpeech(requireContext(), "These are your past transaction details" + "Swipe right to return to the home page")
             }
         }
 
@@ -107,7 +108,7 @@ class Transaction : Fragment() {
         }
     }
 
-            private fun fetchTransactions(list: MutableList<DocumentSnapshot>) {
+    private fun fetchTransactions(list: MutableList<DocumentSnapshot>) {
         thItemsArray = arrayListOf()
         for (i in list) {
             val thItem = TransHisItems(
